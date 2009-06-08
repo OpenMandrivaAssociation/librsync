@@ -4,11 +4,12 @@
 Summary:	Rsync libraries
 Name:		librsync
 Version:	0.9.7
-Release:	%mkrel 5
+Release:	%mkrel 6
 License:	LGPL
 Group:		System/Libraries
 URL:		http://librsync.sourceforge.net/
 Source0:	%{name}-%{version}.tar.bz2
+Patch0:		librsync-0.9.7-4Gig.patch
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -59,8 +60,8 @@ Requires:	%{libname} = %{version}
 Compute and apply signature-based file differences.
 
 %prep
-
 %setup -q
+%patch0 -p1
 
 %build
 
