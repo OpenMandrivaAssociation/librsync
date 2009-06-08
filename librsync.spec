@@ -1,5 +1,6 @@
 %define	major	1
 %define libname	%mklibname rsync %{major}
+%define develname %mklibname -d rsync
 
 Summary:	Rsync libraries
 Name:		librsync
@@ -10,7 +11,7 @@ Group:		System/Libraries
 URL:		http://librsync.sourceforge.net/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		librsync-0.9.7-4Gig.patch
-BuildRequires:	libtool
+Patch1:		librsync-0.9.7-fix-str-fmt.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -41,13 +42,14 @@ The current version of this package does not implement the rsync
 network protocol and uses a delta format slightly more efficient
 than and incompatible with rsync 2.4.6.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Headers for librsync
 Group:		Development/C
 Requires:	%{libname} = %{version}
-Provides:	librsync-devel
+Provides:	librsync-devel = %{version}-%{release}
+Obsoletes:	%{_lib}rsync1-devel < 0.9.7-6
 
-%description -n		%{libname}-devel
+%description -n		%{develname}
 This package contains header files necessary for developing
 programs based on librsync.
 
@@ -62,6 +64,7 @@ Compute and apply signature-based file differences.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 
@@ -92,7 +95,7 @@ Compute and apply signature-based file differences.
 %doc AUTHORS NEWS README THANKS
 %attr(0755,root,root) %{_libdir}/librsync.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(644,root,root,755)
 %doc TODO
 %{_libdir}/librsync.a
@@ -105,4 +108,3 @@ Compute and apply signature-based file differences.
 %defattr(644,root,root,755)
 %attr(0755,root,root) %{_bindir}/rdiff
 %{_mandir}/man1/rdiff.1*
-
