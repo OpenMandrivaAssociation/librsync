@@ -5,7 +5,7 @@
 Summary:	Rsync libraries
 Name:		librsync
 Version:	0.9.7
-Release:	%mkrel 6
+Release:	%mkrel 7
 License:	LGPL
 Group:		System/Libraries
 URL:		http://librsync.sourceforge.net/
