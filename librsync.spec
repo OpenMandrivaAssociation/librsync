@@ -1,17 +1,22 @@
-%define	major	1
+%define	major 1
 %define libname	%mklibname rsync %{major}
 %define develname %mklibname -d rsync
 
 Summary:	Rsync libraries
 Name:		librsync
 Version:	0.9.7
-Release:	%mkrel 7
+Release:	%mkrel 8
 License:	LGPL
 Group:		System/Libraries
 URL:		http://librsync.sourceforge.net/
 Source0:	%{name}-%{version}.tar.bz2
-Patch0:		librsync-0.9.7-4Gig.patch
-Patch1:		librsync-0.9.7-fix-str-fmt.patch
+Patch0:		librsync-0.9.7-fix-str-fmt.patch
+Patch1:		librsync-0.9.7-lfs_overflow.patch
+Patch2:		librsync-0.9.7-getopt.patch
+Patch3:		librsync-0.9.7-man_pages.patch
+BuildRequires:	bzip2-devel
+BuildRequires:	libtool
+BuildRequires:	popt-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -62,11 +67,17 @@ Requires:	%{libname} = %{version}
 Compute and apply signature-based file differences.
 
 %prep
+
 %setup -q
-%patch0 -p1
-%patch1 -p0
+%patch0 -p0
+%patch1 -p1 -b .lfs_overflow
+%patch2 -p1 -b .getopt
+%patch3 -p1 -b .man_pages
+
 
 %build
+libtoolize --copy --force
+autoreconf -fi
 
 %configure2_5x \
     --enable-shared \
