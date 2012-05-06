@@ -5,7 +5,7 @@
 Summary:	Rsync libraries
 Name:		librsync
 Version:	0.9.7
-Release:	%mkrel 8
+Release:	9
 License:	LGPL
 Group:		System/Libraries
 URL:		http://librsync.sourceforge.net/
@@ -15,9 +15,8 @@ Patch1:		librsync-0.9.7-lfs_overflow.patch
 Patch2:		librsync-0.9.7-getopt.patch
 Patch3:		librsync-0.9.7-man_pages.patch
 BuildRequires:	bzip2-devel
-BuildRequires:	libtool
+BuildRequires:	autoconf automake libtool
 BuildRequires:	popt-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 librsync implements the "rsync" algorithm, which allows remote
@@ -81,41 +80,26 @@ autoreconf -fi
 
 %configure2_5x \
     --enable-shared \
-    --enable-static
+    --disable-static
 
 %make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %makeinstall_std
 
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files -n %{libname}
-%defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS
 %attr(0755,root,root) %{_libdir}/librsync.so.%{major}*
 
 %files -n %{develname}
-%defattr(644,root,root,755)
 %doc TODO
-%{_libdir}/librsync.a
-%{_libdir}/librsync.la
-%{_libdir}/librsync.so
+%{_libdir}/*.so
 %{_includedir}/*
 %{_mandir}/man3/*
 
 %files -n rdiff
-%defattr(644,root,root,755)
 %attr(0755,root,root) %{_bindir}/rdiff
 %{_mandir}/man1/rdiff.1*
