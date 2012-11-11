@@ -1,0 +1,11 @@
+--- buf.c.str	2009-06-08 06:19:46.000000000 +0200
++++ buf.c	2009-06-08 06:19:58.000000000 +0200
+@@ -213,7 +213,7 @@
+ 
+     got = fread(*buf, 1, *len, f);
+     if (got == -1) {
+-        rs_error(strerror(errno));
++        rs_error("%s", strerror(errno));
+         return RS_IO_ERROR;
+     } else if (got == 0) {
+         rs_error("unexpected eof on fd%d", fileno(f));
