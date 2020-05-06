@@ -4,17 +4,18 @@
 
 Summary:	Rsync libraries
 Name:		librsync
-Version:	1.0.0
+Version:	2.3.0
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://librsync.sourceforge.net/
-Source0:	https://github.com/%{name}/%{name}/archive/v%{version}.tar.gz
-Patch0:		librsync-0.9.7-getopt.patch
-BuildRequires:	zlib-devel
-BuildRequires:	bzip2-devel 
+Source0:	https://github.com/librsync/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	pkgconfig(popt)
-BuildRequires:	libtool
+BuildRequires:	cmake
+BuildRequires:	doxygen
 
 %description
 librsync implements the "rsync" algorithm, which allows remote
@@ -64,23 +65,18 @@ Compute and apply signature-based file differences.
 
 %prep
 %setup -q
-%patch0 -p1
+%autopatch -p1
 
 %build
-libtoolize
-autoreconf -f -i
-%configure2_5x \
-    --enable-shared \
-    --disable-static
-
-%make
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files -n %{libname}
-%doc AUTHORS NEWS README.md
-%{_libdir}/librsync.so.%{major}*
+%doc AUTHORS CONTRIBUTING.md NEWS.md README.md
+%{_libdir}/librsync.so.%{major}{,.*}
 
 %files -n %{develname}
 %{_libdir}/%{name}.so
