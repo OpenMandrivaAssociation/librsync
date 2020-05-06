@@ -69,10 +69,10 @@ Compute and apply signature-based file differences.
 
 %build
 %cmake
-%cmake_build
+%make_build
 
 %install
-%cmake_install
+%make_install -C build
 
 %files -n %{libname}
 %doc AUTHORS CONTRIBUTING.md NEWS.md README.md
