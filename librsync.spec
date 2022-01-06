@@ -5,7 +5,7 @@
 Summary:	Rsync libraries
 Name:		librsync
 Version:	2.3.2
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://librsync.sourceforge.net/
