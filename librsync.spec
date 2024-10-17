@@ -8,7 +8,7 @@ Version:	2.3.4
 Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
-URL:		http://librsync.sourceforge.net/
+URL:		https://librsync.sourceforge.net/
 Source0:	https://github.com/librsync/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:	pkgconfig(zlib)
